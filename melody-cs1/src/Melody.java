@@ -1,5 +1,3 @@
-// TODO: write this class
-
 import java.util.*;
 import java.io.*;
 import melody.audio.*;
@@ -97,55 +95,55 @@ public class Melody {
     }
 
 	public String getTitle() {
-		// TODO: write this method
-		return title;
-	}
+        // TODO: write this method
+        return title;
+    }
 
 	public double getTotalDuration() {
-      /*
-       * Get the total duration of the song
-       *
-       * Loop through each note in the _notes_ array and sum the durations of each note.
-       */
+        /*
+        * Get the total duration of the song
+        *
+        * Loop through each note in the _notes_ array and sum the durations of each note.
+        */
 
-      double totalDuration = 0.0;
-      Note currNote = null;
+        double totalDuration = 0.0;
+        Note currNote = null;
 
-      // Is the current note within the section that will be repeated?
-      boolean inRepeatedSection = false;
+        // Is the current note within the section that will be repeated?
+        boolean inRepeatedSection = false;
 
-      // Loop through the notes of the melody
-      for ( int i = 0; i < notes.length; i++ ){
-          currNote = notes[i];
-          System.out.println("Current note: " + currNote.toString());
-          /*
-            Within a repeated section, each note is played twice.
-            If the current note is within a repeated section, then add twice the duration to the totalDuration.
-          */
+        // Loop through the notes of the melody
+        for ( int i = 0; i < notes.length; i++ ){
+            currNote = notes[i];
+            System.out.println("Current note: " + currNote.toString());
+            /*
+              Within a repeated section, each note is played twice.
+              If the current note is within a repeated section, then add twice the duration to the totalDuration.
+            */
 
-          // Check if the current note is the start of a repeated section. If it is, then toggle the inRepeatedSection flag (false -> true). If the current note is another repeated, toggle the flag to false (not in repeated section).
-          if ( currNote.isRepeat() ) {
+            // Check if the current note is the start of a repeated section. If it is, then toggle the inRepeatedSection flag (false -> true). If the current note is another repeated, toggle the flag to false (not in repeated section).
+            if ( currNote.isRepeat() ) {
 
-              if ( !inRepeatedSection ){
-                  inRepeatedSection = true;
-              }
-              else if ( inRepeatedSection ) {
-                  System.out.println("Adding " + 2 * currNote.getDuration() + "s");
-                  totalDuration += 2 * currNote.getDuration();
-                  inRepeatedSection = false;
-              }
-          }
+                if ( !inRepeatedSection ){
+                    inRepeatedSection = true;
+                }
+                else if ( inRepeatedSection ) {
+                    System.out.println("Adding " + 2 * currNote.getDuration() + "s");
+                    totalDuration += 2 * currNote.getDuration();
+                    inRepeatedSection = false;
+                }
+            }
 
-          if ( inRepeatedSection ){
-              System.out.println("Adding " + 2 * currNote.getDuration() + "s");
-              totalDuration += 2 * currNote.getDuration();
-          }
-          else if ( !currNote.isRepeat() ){
-              System.out.println("Adding " + currNote.getDuration() + "s");
-              totalDuration += currNote.getDuration();
-          }
-      }
-      return totalDuration;
+            if ( inRepeatedSection ){
+                System.out.println("Adding " + 2 * currNote.getDuration() + "s");
+                totalDuration += 2 * currNote.getDuration();
+            }
+            else if ( !currNote.isRepeat() ){
+                System.out.println("Adding " + currNote.getDuration() + "s");
+                totalDuration += currNote.getDuration();
+            }
+        }
+        return totalDuration;
 	}
 
 	public boolean octaveDown() {
