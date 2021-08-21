@@ -8,7 +8,7 @@ Through the interface, text files with melody information are able to be loaded 
 ## Compilation
 Compile the program using the following command
 
-`java
+`
 javac ./melody-cs1/*.java
 `
 
