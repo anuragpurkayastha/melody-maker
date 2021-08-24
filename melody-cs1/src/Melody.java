@@ -27,12 +27,6 @@ public class Melody {
             // Read the number of notes
             numNotes = Integer.parseInt(fileReader.nextLine());
 
-            /*----------------------
-             * TEST OUTPUTS
-             *----------------------*/
-            System.out.println("\tSONG INFO:");
-            System.out.print("Title:\t" + title + "\nArtist:\t" + artist + "\n#notes:\t" + numNotes + "\n");
-            System.out.println("================================================================");
 
             // There are _numNotes_ notes in the file.
             // Loop word by word and parse each note in the file.
@@ -99,81 +93,81 @@ public class Melody {
         return title;
     }
 
-	public double getTotalDuration() {
+    public double getTotalDuration() {
+    /*
+    * Get the total duration of the song
+    *
+    * Loop through each note in the _notes_ array and sum the durations of each note.
+    */
+
+    double totalDuration = 0.0;
+    Note currNote = null;
+
+    // Is the current note within the section that will be repeated?
+    boolean inRepeatedSection = false;
+
+    // Loop through the notes of the melody
+    for ( int i = 0; i < notes.length; i++ ){
+        currNote = notes[i];
+        //System.out.println("Current note: " + currNote.toString());
         /*
-        * Get the total duration of the song
-        *
-        * Loop through each note in the _notes_ array and sum the durations of each note.
+          Within a repeated section, each note is played twice.
+          If the current note is within a repeated section, then add twice the duration to the totalDuration.
         */
 
-        double totalDuration = 0.0;
-        Note currNote = null;
+        // Check if the current note is the start of a repeated section. If it is, then toggle the inRepeatedSection flag (false -> true). If the current note is another repeated, toggle the flag to false (not in repeated section).
+        if ( currNote.isRepeat() ) {
 
-        // Is the current note within the section that will be repeated?
-        boolean inRepeatedSection = false;
-
-        // Loop through the notes of the melody
-        for ( int i = 0; i < notes.length; i++ ){
-            currNote = notes[i];
-            System.out.println("Current note: " + currNote.toString());
-            /*
-              Within a repeated section, each note is played twice.
-              If the current note is within a repeated section, then add twice the duration to the totalDuration.
-            */
-
-            // Check if the current note is the start of a repeated section. If it is, then toggle the inRepeatedSection flag (false -> true). If the current note is another repeated, toggle the flag to false (not in repeated section).
-            if ( currNote.isRepeat() ) {
-
-                if ( !inRepeatedSection ){
-                    inRepeatedSection = true;
-                }
-                else if ( inRepeatedSection ) {
-                    System.out.println("Adding " + 2 * currNote.getDuration() + "s");
-                    totalDuration += 2 * currNote.getDuration();
-                    inRepeatedSection = false;
-                }
+            if ( !inRepeatedSection ){
+                inRepeatedSection = true;
             }
-
-            if ( inRepeatedSection ){
-                System.out.println("Adding " + 2 * currNote.getDuration() + "s");
+            else if ( inRepeatedSection ) {
+                //System.out.println("Adding " + 2 * currNote.getDuration() + "s");
                 totalDuration += 2 * currNote.getDuration();
-            }
-            else if ( !currNote.isRepeat() ){
-                System.out.println("Adding " + currNote.getDuration() + "s");
-                totalDuration += currNote.getDuration();
+                inRepeatedSection = false;
             }
         }
-        return totalDuration;
-	}
 
-	public boolean octaveDown() {
-		// TODO: write this method
-		return false;
-	}
+        if ( inRepeatedSection ){
+            //System.out.println("Adding " + 2 * currNote.getDuration() + "s");
+            totalDuration += 2 * currNote.getDuration();
+        }
+        else if ( !currNote.isRepeat() ){
+            //System.out.println("Adding " + currNote.getDuration() + "s");
+            totalDuration += currNote.getDuration();
+        }
+    }
+    return totalDuration;
+    }
 
-	public boolean octaveUp() {
-		// TODO: write this method
-		return false;
-	}
+    public boolean octaveDown() {
+            // TODO: write this method
+            return false;
+    }
 
-	public void play() {
-      /*
-       * Play the melody.
-       * Loop through the array in _notes_ array and play each note.
-       */
+    public boolean octaveUp() {
+            // TODO: write this method
+            return false;
+    }
 
-      for ( int i = 0; i < notes.length; i++ ){
-          notes[i].play();
-      }
-	}
+    public void play() {
+  /*
+   * Play the melody.
+   * Loop through the array in _notes_ array and play each note.
+   */
 
-	public void reverse() {
-		// TODO: write this method
-	}
+  for ( int i = 0; i < notes.length; i++ ){
+      notes[i].play();
+  }
+    }
 
-	public String toString() {
-		// TODO: write this method
-		return "";
-	}
+    public void reverse() {
+            // TODO: write this method
+    }
+
+    public String toString() {
+            // TODO: write this method
+            return "";
+    }
 }
 
