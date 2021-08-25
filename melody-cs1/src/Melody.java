@@ -8,6 +8,7 @@ public class Melody {
     private String artist;
     private String title;
     private int numNotes;
+    private Note[] notesInOrder;
 
     public Melody(File file) {
         /*
@@ -72,6 +73,8 @@ public class Melody {
                     notes[i] = newNote;
                 }
             }
+
+            notesInOrder = this.melodyNotesToPlay();
         }
         catch(FileNotFoundException err){
             System.out.println("Error! File not found");
@@ -99,43 +102,12 @@ public class Melody {
         */
 
         double totalDuration = 0.0;
-        Note currNote = null;
-
-        // Is the current note within the section that will be repeated?
-        boolean inRepeatedSection = false;
-
-        // Loop through the notes of the melody
-        for ( int i = 0; i < notes.length; i++ ){
-            currNote = notes[i];
-            //System.out.println("Current note: " + currNote.toString());
-            /*
-              Within a repeated section, each note is played twice.
-              If the current note is within a repeated section, then add twice the duration to the totalDuration.
-            */
-
-            // Check if the current note is the start of a repeated section. If it is, then toggle the inRepeatedSection flag (false -> true). If the current note is another repeated, toggle the flag to false (not in repeated section).
-            if ( currNote.isRepeat() ) {
-
-                if ( !inRepeatedSection ){
-                    inRepeatedSection = true;
-                }
-                else if ( inRepeatedSection ) {
-                    //System.out.println("Adding " + 2 * currNote.getDuration() + "s");
-                    totalDuration += 2 * currNote.getDuration();
-                    inRepeatedSection = false;
-                }
-            }
-
-            if ( inRepeatedSection ){
-                //System.out.println("Adding " + 2 * currNote.getDuration() + "s");
-                totalDuration += 2 * currNote.getDuration();
-            }
-            else if ( !currNote.isRepeat() ){
-                //System.out.println("Adding " + currNote.getDuration() + "s");
-                totalDuration += currNote.getDuration();
-            }
-        }
         
+
+        for ( int i = 0; i < notesInOrder.length; i++ ){
+            totalDuration += notesInOrder[i].getDuration();
+        }
+
         return totalDuration;
     }
 
@@ -154,8 +126,8 @@ public class Melody {
     * Play the melody.
     * Loop through the array in _notes_ array and play each note.
     */
-        for ( int i = 0; i < notes.length; i++ ){
-            notes[i].play();
+        for ( int i = 0; i < notesInOrder.length; i++ ){
+            notesInOrder[i].play();
         }
     }
 
@@ -168,7 +140,6 @@ public class Melody {
         
         Note[] notesPlayed = this.melodyNotesToPlay();
         String notesPlayedString = "";
-
         for ( int i = 0; i < notesPlayed.length; i++ ){
             notesPlayedString += notesPlayed[i].toString();
             notesPlayedString += "\n";
@@ -198,7 +169,6 @@ public class Melody {
 
         while ( note_i < copyOfNotes.length ){
             currNote = copyOfNotes[note_i];
-            //System.out.println("Current note index: " + note_i);
 
             // Add the current note to the array list
             noteList.add(currNote);
@@ -225,7 +195,7 @@ public class Melody {
 
         Note[] noteListArray = new Note[noteList.size()];
         noteListArray = noteList.toArray(noteListArray);
-        
+
         return noteListArray;
     }
 }
