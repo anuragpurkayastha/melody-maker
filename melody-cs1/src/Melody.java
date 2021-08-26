@@ -82,7 +82,15 @@ public class Melody {
     }
 
     public void changeTempo(double ratio) {
-        // TODO: write this method
+        /*
+         * Change the duration of each note by ratio.
+         *
+         * The final duration of each note will be duration * ratio
+         */
+        // TODO: Fix scaling of duration. It is off by a factor of 4.
+        for ( int i = 0; i < notesInOrder.length; i++ ){
+            notesInOrder[i].setDuration(notesInOrder[i].getDuration() * ratio);
+        }
 
     }
 
@@ -136,6 +144,7 @@ public class Melody {
     }
 
     public String toString() {
+        
         // TODO: Fix bug where the 'repeat' field is being altered by the melodyNotesToPlay() method.
         String notesPlayedString = "\n";
 
