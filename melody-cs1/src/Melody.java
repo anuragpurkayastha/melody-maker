@@ -136,12 +136,11 @@ public class Melody {
     }
 
     public String toString() {
-        // TODO: write this method
-        
-        Note[] notesPlayed = this.melodyNotesToPlay();
-        String notesPlayedString = "";
-        for ( int i = 0; i < notesPlayed.length; i++ ){
-            notesPlayedString += notesPlayed[i].toString();
+        // TODO: Fix bug where the 'repeat' field is being altered by the melodyNotesToPlay() method.
+        String notesPlayedString = "\n";
+
+        for ( int i = 0; i < notes.length; i++ ){
+            notesPlayedString += notes[i].toString();
             notesPlayedString += "\n";
         }
         return notesPlayedString;
@@ -155,7 +154,7 @@ public class Melody {
          */
 
         // Take a copy of the notes list so we don't modify the original
-        Note[] copyOfNotes = notes;
+        Note[] copyOfNotes = notes.clone();
 
         ArrayList<Note> noteList = new ArrayList<Note>();
         
@@ -199,4 +198,3 @@ public class Melody {
         return noteListArray;
     }
 }
-
