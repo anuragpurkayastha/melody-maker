@@ -115,11 +115,14 @@ public class Melody {
         }
         
         System.out.println();
+        Note currNote;
 
         for ( int i = 0; i < allNotes.length; i++ ){
-            System.out.print(allNotes[i].toString() + " (Duration: " + allNotes[i].getDuration() + ")\t=>\t");
-            allNotes[i].setDuration(allNotes[i].getDuration() * ratio);
-            System.out.println( allNotes[i].toString() + "\n");
+            currNote = allNotes[i];
+
+            System.out.print(currNote.toString() + " (Duration: " + currNote.getDuration() + ")\t=>\t");
+            currNote.setDuration(currNote.getDuration() * ratio);
+            System.out.println( currNote.toString() + "\n");
         }
 
         System.out.println("\nNotes after tempo change:");
@@ -173,11 +176,10 @@ public class Melody {
         return false;
     }
 
+    /**
+     * Play the melody
+     */
     public void play() {
-    /*
-    * Play the melody.
-    * Loop through the array in _notes_ array and play each note.
-    */
         for ( int i = 0; i < allNotes.length; i++ ){
             allNotes[i].play();
         }
@@ -192,9 +194,13 @@ public class Melody {
         } 
     }
 
+    /**
+     * Return a string representation of the melody
+     *
+     * @return  a String of the melody
+     */
     public String toString() {
         
-        // TODO: Fix bug where the 'repeat' field is being altered by the getAllNotes() method.
         String melodyString = "\nTITLE: " + this.getTitle() + "\nARTIST: " + this.getArtist() + "\n# Notes: " + numNotes + "\n\n";
         
         for ( int i = 0; i < notes.length; i++ ){
