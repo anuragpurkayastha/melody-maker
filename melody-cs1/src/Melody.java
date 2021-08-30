@@ -134,18 +134,19 @@ public class Melody {
             currNote = notes[i];
             totalDuration += currNote.getDuration();
 
-            if ( isRepeating ){
-                totalDuration += currNote.getDuration();
-            }
-
             if ( currNote.isRepeat() ){
+
+                if ( isRepeating ){
+                    totalDuration += currNote.getDuration();
+                }
+
                 isRepeating = !isRepeating;
             }
 
-
-            System.out.println(currNote.toString() + "\tisRepeating: " + isRepeating + "\ttotalDuration: " + totalDuration); 
+            if ( isRepeating ){
+                totalDuration += currNote.getDuration();
+            }
         }
-
         return totalDuration;
     }
 
@@ -163,8 +164,33 @@ public class Melody {
      * Play the melody
      */
     public void play() {
-        for ( int i = 0; i < notes.length; i++ ){
-            notes[i].play();
+
+        int note_i = 0; // Index of the current note.
+        boolean isRepeating = false;  // Is the current section being repeated?
+        Note currNote;
+
+        int repeatSectionStart = 0;  // Starting index of the repeated section.
+        int repeatSectionEnd = 0;   // Ending index of repeated section.
+
+        while ( note_i < notes.length ){
+            currNote = notes[note_i];
+
+            currNote.play();
+
+            if ( currNote.isRepeat() ){
+
+                if ( isRepeating ) {
+                    repeatSectionEnd = note_i;
+                    note_i = repeatSectionStart;
+                    continue;
+                }
+                else{
+                    repeatSectionStart = note_i;
+                }
+
+                isRepeating = !isRepeating;
+            }
+            note_i++;
         }
     }
 
