@@ -2,20 +2,29 @@ import java.util.*;
 import java.io.*;
 import melody.audio.*;
 
+/**
+ * Melody is a class that represents a sequence of Note objects.
+ *
+ * @author      Anurag Purkayastha
+ * @version     0.1
+ */
 public class Melody {
-
-    private Note[] notes;       // Notes contained in the file listed in order. Does not account for repetitions.
+    
+    /* Notes contained in the file.
+     * Also take a copy of the _notes_ array for processing.
+     */
+    private Note[] notes, copyOfNotes;
     private String artist;
     private String title;
     private int numNotes;
-    private Note[] notesInOrder;
-
+    private Note[] allNotes;
+    
+    /**
+     * Melody constructor.
+     *
+     * @param   file    the file object containing the data of the melody.
+     */
     public Melody(File file) {
-        /*
-          Create a Melody object.
-
-          Arguments: file - Text file with the representation of the melody.
-         */
         try{
             Scanner fileReader = new Scanner(file);
 
@@ -36,8 +45,9 @@ public class Melody {
             int octave;
             String accidental;
             boolean repeat;
-            Note newNote;
+            Note newNote, newNoteCopy;
             notes = new Note[numNotes];
+            copyOfNotes = new Note[numNotes];
 
             for ( int i = 0; i < numNotes; i++ ){
 
@@ -55,8 +65,9 @@ public class Melody {
                     repeat = Boolean.parseBoolean(fileReader.next());
 
                     newNote = new Note(duration, repeat);
-
+                    newNoteCopy = new Note(duration, repeat);
                     notes[i] = newNote;
+                    copyOfNotes[i] = newNoteCopy;
                 }
                 else {
                     // Get the octave
@@ -70,50 +81,85 @@ public class Melody {
                     repeat = Boolean.parseBoolean(fileReader.next());
 
                     newNote = new Note(duration, pit, octave, acc, repeat);
+                    newNoteCopy = new Note(duration, pit, octave, acc, repeat);
                     notes[i] = newNote;
+                    copyOfNotes[i] = newNoteCopy;
                 }
             }
+            
+            for ( int i = 0; i < notes.length; i++ ){
+                System.out.println(notes[i].toString());
+            }
 
-            notesInOrder = this.melodyNotesToPlay();
+            allNotes = this.getAllNotes();
         }
         catch(FileNotFoundException err){
             System.out.println("Error! File not found");
         }
     }
-
+    
+    /**
+     * Increase the duration of each note.
+     *
+     * @param   ratio   the ratio by which to increase the duration
+     */
     public void changeTempo(double ratio) {
-        /*
-         * Change the duration of each note by ratio.
-         *
-         * The final duration of each note will be duration * ratio
-         */
         // TODO: Fix scaling of duration. It is off by a factor of 4.
-        for ( int i = 0; i < notesInOrder.length; i++ ){
-            notesInOrder[i].setDuration(notesInOrder[i].getDuration() * ratio);
+
+        System.out.println("Changing the tempo\n");
+
+        System.out.println("Notes before tempo change:");
+
+        for ( int i = 0; i < allNotes.length; i++){
+            System.out.println(allNotes[i].toString());
+        }
+        
+        System.out.println();
+
+        for ( int i = 0; i < allNotes.length; i++ ){
+            System.out.println("Current note: " + allNotes[i].toString());
+            System.out.println("Changing by ratio: " + ratio);
+            System.out.println("Final duration: " + allNotes[i].getDuration() * ratio); 
+            allNotes[i].setDuration(allNotes[i].getDuration() * ratio);
+            System.out.println("Final note after tempo change: " + allNotes[i].toString());
         }
 
+        System.out.println("\nNotes after tempo change:");
+        for ( int i = 0; i < allNotes.length; i++){
+            System.out.println(allNotes[i].toString());
+        }
     }
 
+    /**
+     * Return the artist of the melody.
+     *
+     * @return  the artist of the melody
+     */
     public String getArtist() {
         return artist;
     }
 
+    /**
+     * Return the title of the melody.
+     *
+     * @return  the title of the melody
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Get the total duration of the song.
+     *
+     * @return   the total duration
+     */ 
     public double getTotalDuration() {
-        /*
-        * Get the total duration of the song
-        *
-        * Loop through each note in the _notes_ array and sum the durations of each note.
-        */
 
         double totalDuration = 0.0;
         
 
-        for ( int i = 0; i < notesInOrder.length; i++ ){
-            totalDuration += notesInOrder[i].getDuration();
+        for ( int i = 0; i < allNotes.length; i++ ){
+            totalDuration += allNotes[i].getDuration();
         }
 
         return totalDuration;
@@ -134,8 +180,8 @@ public class Melody {
     * Play the melody.
     * Loop through the array in _notes_ array and play each note.
     */
-        for ( int i = 0; i < notesInOrder.length; i++ ){
-            notesInOrder[i].play();
+        for ( int i = 0; i < allNotes.length; i++ ){
+            allNotes[i].play();
         }
     }
 
@@ -145,7 +191,7 @@ public class Melody {
 
     public String toString() {
         
-        // TODO: Fix bug where the 'repeat' field is being altered by the melodyNotesToPlay() method.
+        // TODO: Fix bug where the 'repeat' field is being altered by the getAllNotes() method.
         String notesPlayedString = "\n";
 
         for ( int i = 0; i < notes.length; i++ ){
@@ -155,15 +201,13 @@ public class Melody {
         return notesPlayedString;
     }
 
-    private Note[] melodyNotesToPlay(){
-        /*
-         * Parse the melody file to create a note array with all of the notes to play in order.
-         *
-         * This takes into account the repeated sections.
-         */
-
-        // Take a copy of the notes list so we don't modify the original
-        Note[] copyOfNotes = notes.clone();
+    /**
+     * Return an array containing every single note that is to be played.
+     * This can be used by other methods.
+     *
+     * @return  a Note array containing all of the Note objects.
+     */
+    private Note[] getAllNotes(){
 
         ArrayList<Note> noteList = new ArrayList<Note>();
         
@@ -203,6 +247,7 @@ public class Melody {
 
         Note[] noteListArray = new Note[noteList.size()];
         noteListArray = noteList.toArray(noteListArray);
+        
 
         return noteListArray;
     }
