@@ -11,13 +11,11 @@ import melody.audio.*;
 public class Melody {
     
     /* Notes contained in the file.
-     * Also take a copy of the _notes_ array for processing.
      */
-    private Note[] notes, copyOfNotes;
+    private Note[] notes;
     private String artist;
     private String title;
     private int numNotes;
-    private Note[] allNotes;
     
     /**
      * Melody constructor.
@@ -47,7 +45,6 @@ public class Melody {
             boolean repeat;
             Note newNote, newNoteCopy;
             notes = new Note[numNotes];
-            copyOfNotes = new Note[numNotes];
 
             for ( int i = 0; i < numNotes; i++ ){
 
@@ -65,9 +62,7 @@ public class Melody {
                     repeat = Boolean.parseBoolean(fileReader.next());
 
                     newNote = new Note(duration, repeat);
-                    newNoteCopy = new Note(duration, repeat);
                     notes[i] = newNote;
-                    copyOfNotes[i] = newNoteCopy;
                 }
                 else {
                     // Get the octave
@@ -81,17 +76,13 @@ public class Melody {
                     repeat = Boolean.parseBoolean(fileReader.next());
 
                     newNote = new Note(duration, pit, octave, acc, repeat);
-                    newNoteCopy = new Note(duration, pit, octave, acc, repeat);
                     notes[i] = newNote;
-                    copyOfNotes[i] = newNoteCopy;
                 }
             }
             
             for ( int i = 0; i < notes.length; i++ ){
                 System.out.println(notes[i].toString());
             }
-
-            allNotes = this.getAllNotes();
         }
         catch(FileNotFoundException err){
             System.out.println("Error! File not found");
@@ -105,30 +96,6 @@ public class Melody {
      */
     public void changeTempo(double ratio) {
         // TODO: Fix scaling of duration. It is off by a factor of 4.
-
-        System.out.println("Changing the tempo\n");
-
-        System.out.println("Notes before tempo change:");
-
-        for ( int i = 0; i < allNotes.length; i++){
-            System.out.println(allNotes[i].toString() + " (Duration: " + allNotes[i].getDuration() + ")");
-        }
-        
-        System.out.println();
-        Note currNote;
-
-        for ( int i = 0; i < allNotes.length; i++ ){
-            currNote = allNotes[i];
-
-            System.out.print(currNote.toString() + " (Duration: " + currNote.getDuration() + ")\t=>\t");
-            currNote.setDuration(currNote.getDuration() * ratio);
-            System.out.println( currNote.toString() + "\n");
-        }
-
-        System.out.println("\nNotes after tempo change:");
-        for ( int i = 0; i < allNotes.length; i++){
-            System.out.println(allNotes[i].toString());
-        }
     }
 
     /**
@@ -158,9 +125,25 @@ public class Melody {
 
         double totalDuration = 0.0;
         
+        boolean isRepeating = false;
 
-        for ( int i = 0; i < allNotes.length; i++ ){
-            totalDuration += allNotes[i].getDuration();
+        Note currNote;
+
+        // Loop through each of the notes in the _notes_ array
+        for ( int i = 0; i < notes.length; i++ ){
+            currNote = notes[i];
+            totalDuration += currNote.getDuration();
+
+            if ( isRepeating ){
+                totalDuration += currNote.getDuration();
+            }
+
+            if ( currNote.isRepeat() ){
+                isRepeating = !isRepeating;
+            }
+
+
+            System.out.println(currNote.toString() + "\tisRepeating: " + isRepeating + "\ttotalDuration: " + totalDuration); 
         }
 
         return totalDuration;
@@ -180,8 +163,8 @@ public class Melody {
      * Play the melody
      */
     public void play() {
-        for ( int i = 0; i < allNotes.length; i++ ){
-            allNotes[i].play();
+        for ( int i = 0; i < notes.length; i++ ){
+            notes[i].play();
         }
     }
 
@@ -189,8 +172,8 @@ public class Melody {
      * Plays the melody in reverse
      */
     public void reverse() {
-        for ( int i = allNotes.length - 1; i >= 0; i-- ){
-           allNotes[i].play();
+        for ( int i = notes.length - 1; i >= 0; i-- ){
+           notes[i].play();
         } 
     }
 
@@ -208,56 +191,5 @@ public class Melody {
             melodyString += "\n";
         }
         return melodyString;
-    }
-
-    /**
-     * Return an array containing every single note that is to be played.
-     * This can be used by other methods.
-     *
-     * @return  a Note array containing all of the Note objects.
-     */
-    private Note[] getAllNotes(){
-
-        ArrayList<Note> noteList = new ArrayList<Note>();
-        
-        // Loop through each note contained in the _notes_ array
-        int note_i = 0;  // Index of the current note.
-        Note currNote;  // Current note.
-        int rep_sec_start = 0;  // If the note is part of a repeated section => index of the starting note
-
-        // If the note is part of a repeated section, is this note the end of the repeated section? False if no, True if yes.
-        boolean isEndOfRepeat = true;
-
-        while ( note_i < copyOfNotes.length ){
-            currNote = copyOfNotes[note_i];
-
-            // Add the current note to the array list
-            noteList.add(currNote);
-            
-            // If the current note is a repeat, toggle the flag if the note is the end of the repeat
-            if ( currNote.isRepeat() ){
-                isEndOfRepeat = !isEndOfRepeat; 
-
-                if ( !isEndOfRepeat ){
-                    rep_sec_start = note_i;
-                }
-            }
-
-            // If the current note is FALSE (ie. the start of the repeated section), then record the index of the current note as the _START_ of the section. Otherwise, record it as the _END_.
-            if ( isEndOfRepeat && currNote.isRepeat() ){
-                note_i = rep_sec_start;
-            }
-            else{
-                note_i++;
-            }
-
-            currNote.setRepeat(false);
-        }
-
-        Note[] noteListArray = new Note[noteList.size()];
-        noteListArray = noteList.toArray(noteListArray);
-        
-
-        return noteListArray;
     }
 }
