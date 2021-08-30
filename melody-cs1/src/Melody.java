@@ -111,17 +111,15 @@ public class Melody {
         System.out.println("Notes before tempo change:");
 
         for ( int i = 0; i < allNotes.length; i++){
-            System.out.println(allNotes[i].toString());
+            System.out.println(allNotes[i].toString() + " (Duration: " + allNotes[i].getDuration() + ")");
         }
         
         System.out.println();
 
         for ( int i = 0; i < allNotes.length; i++ ){
-            System.out.println("Current note: " + allNotes[i].toString());
-            System.out.println("Changing by ratio: " + ratio);
-            System.out.println("Final duration: " + allNotes[i].getDuration() * ratio); 
+            System.out.print(allNotes[i].toString() + " (Duration: " + allNotes[i].getDuration() + ")\t=>\t");
             allNotes[i].setDuration(allNotes[i].getDuration() * ratio);
-            System.out.println("Final note after tempo change: " + allNotes[i].toString());
+            System.out.println( allNotes[i].toString() + "\n");
         }
 
         System.out.println("\nNotes after tempo change:");
@@ -185,20 +183,25 @@ public class Melody {
         }
     }
 
+    /**
+     * Plays the melody in reverse
+     */
     public void reverse() {
-        // TODO: write this method
+        for ( int i = allNotes.length - 1; i >= 0; i-- ){
+           allNotes[i].play();
+        } 
     }
 
     public String toString() {
         
         // TODO: Fix bug where the 'repeat' field is being altered by the getAllNotes() method.
-        String notesPlayedString = "\n";
-
+        String melodyString = "\nTITLE: " + this.getTitle() + "\nARTIST: " + this.getArtist() + "\n# Notes: " + numNotes + "\n\n";
+        
         for ( int i = 0; i < notes.length; i++ ){
-            notesPlayedString += notes[i].toString();
-            notesPlayedString += "\n";
+            melodyString += notes[i].toString();
+            melodyString += "\n";
         }
-        return notesPlayedString;
+        return melodyString;
     }
 
     /**

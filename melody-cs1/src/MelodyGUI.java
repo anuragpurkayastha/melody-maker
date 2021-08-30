@@ -81,7 +81,7 @@ public class MelodyGUI implements ActionListener, StdAudio.AudioEventListener {
 			if (melody != null) {
 				System.out.println("Reversing.");
 				melody.reverse();
-				System.out.println("Melody: " + melody);
+				System.out.println("\nMelody: " + melody);
 			}
 		} else if (cmd == "Up") {
 			if (melody != null) {
@@ -258,7 +258,7 @@ public class MelodyGUI implements ActionListener, StdAudio.AudioEventListener {
 		setCurrentTime(0.0);
 		updateTotalTime();
 		System.out.println("Loading complete.");
-		System.out.println("Melody: " + melody);
+		System.out.println("\nMelody: " + melody);
 		doEnabling();
 	}
 
