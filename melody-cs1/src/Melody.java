@@ -243,7 +243,7 @@ public class Melody {
      * @return  a String of the melody
      */
     public String toString() {
-        
+       // Test comment 
         String melodyString = "\n================================================================================\n"; 
         melodyString += "TITLE: " + this.getTitle() + "\nARTIST: " + this.getArtist() + "\n# Notes: " + numNotes + "\n\n";
         
