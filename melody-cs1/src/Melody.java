@@ -166,31 +166,53 @@ public class Melody {
     public void play() {
 
         int note_i = 0; // Index of the current note.
-        boolean isRepeating = false;  // Is the current section being repeated?
+        boolean toRepeat = false;       // Is the current section to be repeated?
+        boolean secondPass = false;     // Is it the second pass of a repeated section?
         Note currNote;
 
         int repeatSectionStart = 0;  // Starting index of the repeated section.
-        int repeatSectionEnd = 0;   // Ending index of repeated section.
+        int repeatSectionEnd = 0;
 
+        // Play the notes as long as there are notes left to play
         while ( note_i < notes.length ){
             currNote = notes[note_i];
-
             currNote.play();
 
-            if ( currNote.isRepeat() ){
+            /* If the current note is a repeat note, need to consider special cases:
+             *
+             * 1. If the note is a repeated note and it is the second pass of the section:
+             *          > If the index is at the ending note of the section => second pass = false
+             *          > Increment the note index.
+             *
+             * 2. If the note is a repeated note and it is the first pass of the section (ie NOT a second pass then need to consider the following):
+             *
+             *          > If the melody is currently  not repeating, then it is the start of the section => record the index.
+             *          > If the current section has to repeated, then it is the end of the section => record the ending index.
+             *                  - Return to the start of the section.
+             *                  - Currently the secondPass of the melody section.
+             */
+            if ( currNote.isRepeat() && !secondPass){
 
-                if ( isRepeating ) {
+                if ( toRepeat ) {
                     repeatSectionEnd = note_i;
                     note_i = repeatSectionStart;
-                    continue;
+                    secondPass = true;
                 }
                 else{
                     repeatSectionStart = note_i;
+                    note_i++;
                 }
 
-                isRepeating = !isRepeating;
+                toRepeat = !toRepeat;
             }
-            note_i++;
+            else{
+
+                if ( note_i == repeatSectionEnd ){
+                    secondPass = false;
+                }
+
+                note_i++;
+            }
         }
     }
 
@@ -198,9 +220,38 @@ public class Melody {
      * Plays the melody in reverse
      */
     public void reverse() {
-        for ( int i = notes.length - 1; i >= 0; i-- ){
-           notes[i].play();
-        } 
+
+        int n = 0;      //  Maximum number of recursion
+        Note tmp_note;
+
+        if ( (notes.length % 2) == 0 )
+        {
+            n = ((notes.length + 1) / 2) - 1;
+        }
+        else
+        {
+            n = (notes.length / 2);
+        }
+
+        for ( int i = 0; i < n; i++ )
+        {
+            // Get the corresponding element from the end of the array and store in a temporary variable
+            tmp_note = notes[notes.length - 1 - i];
+
+            // Assign the current index of notes to the corresponding element at the end.
+            notes[notes.length - 1 - i] = notes[i];
+
+            notes[i] = tmp_note;
+        }
+
+        System.out.println("Reversed Notes:");
+
+        for ( int i = 0; i < notes.length; i++ )
+        {
+            System.out.println(notes[i].toString());
+        }
+
+        //this.play();
     }
 
     /**
