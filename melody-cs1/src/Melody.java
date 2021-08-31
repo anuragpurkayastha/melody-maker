@@ -34,7 +34,6 @@ public class Melody {
             // Read the number of notes
             numNotes = Integer.parseInt(fileReader.nextLine());
 
-
             // There are _numNotes_ notes in the file.
             // Loop word by word and parse each note in the file.
             double duration;
