@@ -221,19 +221,9 @@ public class Melody {
      */
     public void reverse() {
 
-        int n = 0;      //  Maximum number of recursion
         Note tmp_note;
 
-        if ( (notes.length % 2) == 0 )
-        {
-            n = ((notes.length + 1) / 2) - 1;
-        }
-        else
-        {
-            n = (notes.length / 2);
-        }
-
-        for ( int i = 0; i < n; i++ )
+        for ( int i = 0; i < ((notes.length + 1) / 2); i++ )
         {
             // Get the corresponding element from the end of the array and store in a temporary variable
             tmp_note = notes[notes.length - 1 - i];
@@ -244,14 +234,7 @@ public class Melody {
             notes[i] = tmp_note;
         }
 
-        System.out.println("Reversed Notes:");
-
-        for ( int i = 0; i < notes.length; i++ )
-        {
-            System.out.println(notes[i].toString());
-        }
-
-        //this.play();
+        this.play();
     }
 
     /**
@@ -261,12 +244,16 @@ public class Melody {
      */
     public String toString() {
         
-        String melodyString = "\nTITLE: " + this.getTitle() + "\nARTIST: " + this.getArtist() + "\n# Notes: " + numNotes + "\n\n";
+        String melodyString = "\n================================================================================\n"; 
+        melodyString += "TITLE: " + this.getTitle() + "\nARTIST: " + this.getArtist() + "\n# Notes: " + numNotes + "\n\n";
         
         for ( int i = 0; i < notes.length; i++ ){
             melodyString += notes[i].toString();
             melodyString += "\n";
         }
+
+        melodyString += "================================================================================\n"; 
+
         return melodyString;
     }
 }
