@@ -69,7 +69,7 @@ public class Melody {
                     // Get the accidental
                     accidental = fileReader.next();
                     Accidental acc = Accidental.getValueOf(accidental);
-
+                    
                     // Get the repeat
                     repeat = Boolean.parseBoolean(fileReader.next());
 
