@@ -25,7 +25,6 @@ public class Melody {
     public Melody(File file) {
         try{
             Scanner fileReader = new Scanner(file);
-
             // Read the song title
             title = fileReader.nextLine();
 
@@ -43,7 +42,7 @@ public class Melody {
             int octave;
             String accidental;
             boolean repeat;
-            Note newNote, newNoteCopy;
+            Note newNote;
             notes = new Note[numNotes];
 
             for ( int i = 0; i < numNotes; i++ ){
