@@ -93,7 +93,11 @@ public class Melody {
      * @param   ratio   the ratio by which to increase the duration
      */
     public void changeTempo(double ratio) {
-        // TODO: Fix scaling of duration. It is off by a factor of 4.
+        
+        for ( int i = 0; i < notes.length; i++ )
+        {
+            notes[i].setDuration( notes[i].getDuration() * ratio );
+        } 
     }
 
     /**
