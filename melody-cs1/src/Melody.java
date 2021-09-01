@@ -9,14 +9,14 @@ import melody.audio.*;
  * @version     0.1
  */
 public class Melody {
-    
+
     /* Notes contained in the file.
      */
     private Note[] notes;
     private String artist;
     private String title;
     private int numNotes;
-    
+
     /**
      * Melody constructor.
      *
@@ -69,7 +69,7 @@ public class Melody {
                     // Get the accidental
                     accidental = fileReader.next();
                     Accidental acc = Accidental.getValueOf(accidental);
-                    
+
                     // Get the repeat
                     repeat = Boolean.parseBoolean(fileReader.next());
 
@@ -77,7 +77,7 @@ public class Melody {
                     notes[i] = newNote;
                 }
             }
-            
+
             for ( int i = 0; i < notes.length; i++ ){
                 System.out.println(notes[i].toString());
             }
@@ -86,18 +86,18 @@ public class Melody {
             System.out.println("Error! File not found");
         }
     }
-    
+
     /**
      * Increase the duration of each note.
      *
      * @param   ratio   the ratio by which to increase the duration
      */
     public void changeTempo(double ratio) {
-        
+
         for ( int i = 0; i < notes.length; i++ )
         {
             notes[i].setDuration( notes[i].getDuration() * ratio );
-        } 
+        }
     }
 
     /**
@@ -122,11 +122,11 @@ public class Melody {
      * Get the total duration of the song.
      *
      * @return   the total duration
-     */ 
+     */
     public double getTotalDuration() {
 
         double totalDuration = 0.0;
-        
+
         boolean isRepeating = false;
 
         Note currNote;
@@ -247,7 +247,7 @@ public class Melody {
     public String toString() {
         String melodyString = "\n================================================================================\n"; 
         melodyString += "TITLE: " + this.getTitle() + "\nARTIST: " + this.getArtist() + "\n# Notes: " + numNotes + "\n\n";
-        
+
         for ( int i = 0; i < notes.length; i++ ){
             melodyString += notes[i].toString();
             melodyString += "\n";
