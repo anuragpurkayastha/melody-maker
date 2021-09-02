@@ -29,8 +29,13 @@ To load a file, click on the **Load** button. This will open up a file chooser. 
 The playback buttons are described below:
 
 ***Load***: Load a text file containing the melody.
+
 ***Play***: Play the melody.
+
 ***Reverse***: Play the melody in reverse.
+
 ***Change tempo***: Change the tempo. For example, a tempo of 2.0 increases the duration of each note by a factor of 2.0. Similarly, a tempo of 0.5 changes the duration by half.
+
 ***Increase octave***: *TODO*
+
 ***Decrease octave***: *TODO*
