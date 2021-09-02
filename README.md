@@ -24,7 +24,7 @@ A screenshot of the interface is provided in the image below.
 
 **Insert image**
 
-To load a file, click on the 'Load' button. This will open up a file chooser. Select the desired melody file and click 'open**.
+To load a file, click on the **Load** button. This will open up a file chooser. Select the desired melody file and click **open**.
 
 The playback buttons are described below:
 
