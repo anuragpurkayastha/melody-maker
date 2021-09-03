@@ -201,6 +201,10 @@ public class Melody {
      */
     private boolean containsSpecialOctave()
     {
+        /* TODO: Maybe delete this method and put it in the other octave methods?
+         * Error occurs when increasing octave to maximum limit of 10 but then this method outputs
+         * false when trying to decrease from an octave of 10.
+         */
         int number_of_special_octaves = 0;
 
         for ( int i = 0; i < notes.length; i++ )
