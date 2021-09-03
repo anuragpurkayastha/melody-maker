@@ -178,8 +178,20 @@ public class Melody {
     }
 
     public boolean octaveUp() {
-        // TODO: write this method
-        return false;
+
+        if ( this.containsSpecialOctave() )
+            {
+                return false;
+            }
+
+        for ( int i = 0; i < notes.length; i++ )
+            {
+                if ( notes[i].getPitch() != Pitch.R )
+                    {
+                        notes[i].setOctave( notes[i].getOctave() + 1 );
+                    }
+            }
+        return true;
     }
 
     /**
@@ -193,7 +205,7 @@ public class Melody {
 
         for ( int i = 0; i < notes.length; i++ )
             {
-                if ( notes[i].getOctave() == 1 )
+                if ( notes[i].getOctave() == 1 || notes[i].getOctave() == 10 )
                     {
                         number_of_special_octaves++;
                     }
