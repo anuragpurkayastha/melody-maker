@@ -160,24 +160,12 @@ public class Melody {
      */
     public boolean octaveDown() {
 
-        // Check if any of the octaves are 1
-        int number_of_1_octave = 0;
-
-        for ( int i = 0; i < notes.length; i++ )
-            {
-                if ( notes[i].getOctave() == 1 )
-                    {
-                        number_of_1_octave++;
-                    }
-            }
-
-        // If there are any octaves that are 1, then return false.
-        if ( number_of_1_octave > 0 )
+        //If there are no octaves that are 1, then lower the octave.
+        if ( this.containsSpecialOctave() )
             {
                 return false;
             }
 
-        //If there are no octaves that are 1, then lower the octave.
         for ( int i = 0; i < notes.length; i++ )
             {
                 if ( notes[i].getPitch() != Pitch.R )
@@ -191,6 +179,31 @@ public class Melody {
 
     public boolean octaveUp() {
         // TODO: write this method
+        return false;
+    }
+
+    /**
+     * Check the melody notes for any octaves that are special cases (1 or 10)
+     *
+     * @return true if melody has at least one note with a special case octave
+     */
+    private boolean containsSpecialOctave()
+    {
+        int number_of_special_octaves = 0;
+
+        for ( int i = 0; i < notes.length; i++ )
+            {
+                if ( notes[i].getOctave() == 1 )
+                    {
+                        number_of_special_octaves++;
+                    }
+            }
+
+        if ( number_of_special_octaves > 1 )
+            {
+                return true;
+            }
+
         return false;
     }
 
