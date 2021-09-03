@@ -152,9 +152,41 @@ public class Melody {
         return totalDuration;
     }
 
+    /**
+     * Lower the octave by one. For example, a C note in octave 4 would become a C note in octave 3.
+     * If any of the notes are at octave 1, then the entire method should do nothing.
+     *
+     * @return true if method lowered the octave. False if otherwise.
+     */
     public boolean octaveDown() {
-        // TODO: write this method
-        return false;
+
+        // Check if any of the octaves are 1
+        int number_of_1_octave = 0;
+
+        for ( int i = 0; i < notes.length; i++ )
+            {
+                if ( notes[i].getOctave() == 1 )
+                    {
+                        number_of_1_octave++;
+                    }
+            }
+
+        // If there are any octaves that are 1, then return false.
+        if ( number_of_1_octave > 0 )
+            {
+                return false;
+            }
+
+        //If there are no octaves that are 1, then lower the octave.
+        for ( int i = 0; i < notes.length; i++ )
+            {
+                if ( notes[i].getPitch() != Pitch.R )
+                    {
+                        notes[i].setOctave( notes[i].getOctave() - 1 );
+                    }
+            }
+
+        return true;
     }
 
     public boolean octaveUp() {
