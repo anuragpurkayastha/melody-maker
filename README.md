@@ -36,6 +36,6 @@ The playback buttons are described below:
 
 **Change tempo**: Change the tempo. For example, a tempo of 2.0 increases the duration of each note by a factor of 2.0. Similarly, a tempo of 0.5 changes the duration by half.
 
-**Increase octave**: *TODO*
+**Increase octave**: Increases the octave of each note by 1. (Note: if there are any notes with an octave of 10, this button will do nothing.)
 
-**Decrease octave**: *TODO*
+**Decrease octave**: Decreases the octave of each note by 1. (Note: if there are any notes with an octave of 1, this button will do nothing.)
