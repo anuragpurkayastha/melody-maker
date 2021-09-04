@@ -209,7 +209,7 @@ public class MelodyGUI implements ActionListener, StdAudio.AudioEventListener {
 	 */
 	private void doLayout() {
 		overallLayout = Box.createVerticalBox();
-		ImageIcon logoIcon = new ImageIcon(RESOURCE_FOLDER
+		ImageIcon logoIcon = new ImageIcon(".." + File.separator + RESOURCE_FOLDER
 				+ File.separator + ICONS_FOLDER + File.separator + "notes.gif");
 		overallLayout.add(GuiUtils.createPanel(new JLabel(logoIcon)));
 		overallLayout.add(GuiUtils.createPanel(statusLabel));
