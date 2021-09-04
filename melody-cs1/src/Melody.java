@@ -161,7 +161,7 @@ public class Melody {
     public boolean octaveDown() {
 
         //If there are no octaves that are 1, then lower the octave.
-        if ( this.containsSpecialOctave() )
+        if ( this.containsSpecialOctave(false) )
             {
                 return false;
             }
@@ -179,7 +179,7 @@ public class Melody {
 
     public boolean octaveUp() {
 
-        if ( this.containsSpecialOctave() )
+        if ( this.containsSpecialOctave(true) )
             {
                 return false;
             }
@@ -197,19 +197,27 @@ public class Melody {
     /**
      * Check the melody notes for any octaves that are special cases (1 or 10)
      *
+     * @param isIncrementing true if the operation is to increment the octave, false otherwise.
      * @return true if melody has at least one note with a special case octave
      */
-    private boolean containsSpecialOctave()
+    private boolean containsSpecialOctave(boolean isIncrementing)
     {
-        /* TODO: Maybe delete this method and put it in the other octave methods?
-         * Error occurs when increasing octave to maximum limit of 10 but then this method outputs
-         * false when trying to decrease from an octave of 10.
-         */
         int number_of_special_octaves = 0;
+        int specialOctave = 0;
+
+        // The special case octave depends on whether the octave is being increased or decreased.
+        if ( isIncrementing )
+            {
+                specialOctave = 10;
+            }
+        else
+            {
+                specialOctave = 1;
+            }
 
         for ( int i = 0; i < notes.length; i++ )
             {
-                if ( notes[i].getOctave() == 1 || notes[i].getOctave() == 10 )
+                if ( notes[i].getOctave() == specialOctave )
                     {
                         number_of_special_octaves++;
                     }
