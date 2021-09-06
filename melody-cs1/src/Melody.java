@@ -237,7 +237,7 @@ public class Melody {
     public void play() {
 
         int note_i = 0; // Index of the current note.
-        boolean toRepeat = false;       // Is the current section to be repeated?
+        boolean repeatSecStart = false;       // Is it the start of a repeated section?
         boolean secondPass = false;     // Is it the second pass of a repeated section?
         Note currNote;
 
@@ -264,7 +264,7 @@ public class Melody {
              */
             if ( currNote.isRepeat() && !secondPass){
 
-                if ( toRepeat ) {
+                if ( repeatSecStart ) {
                     repeatSectionEnd = note_i;
                     note_i = repeatSectionStart;
                     secondPass = true;
@@ -274,7 +274,7 @@ public class Melody {
                     note_i++;
                 }
 
-                toRepeat = !toRepeat;
+                repeatSecStart = !repeatSecStart;
             }
             else{
 
