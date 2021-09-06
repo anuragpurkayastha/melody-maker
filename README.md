@@ -34,8 +34,8 @@ The playback buttons are described below:
 
 **Reverse**: Play the melody in reverse.
 
-**Change tempo**: Change the tempo. For example, a tempo of 2.0 increases the duration of each note by a factor of 2.0. Similarly, a tempo of 0.5 changes the duration by half.
+**Change tempo**: Change the tempo to the value specified in the text box. For example, a tempo of 2.0 increases the duration of each note by a factor of 2.0. Similarly, a tempo of 0.5 changes the duration by half.
 
-**Increase octave**: Increases the octave of each note by 1. (Note: if there are any notes with an octave of 10, this button will do nothing.)
+**Up**: Increases the octave of each note by 1. (Note: if there are any notes with an octave of 10, this button will do nothing.)
 
-**Decrease octave**: Decreases the octave of each note by 1. (Note: if there are any notes with an octave of 1, this button will do nothing.)
+**Down**: Decreases the octave of each note by 1. (Note: if there are any notes with an octave of 1, this button will do nothing.)
