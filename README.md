@@ -22,7 +22,7 @@ java ./melody-cs1/src/Main.java
 ## Usage
 A screenshot of the interface is provided in the image below.
 
-**Insert image**
+![Graphical interface](/melody-cs1/assets/img/Melody_player_gui.png)
 
 To load a file, click on the **Load** button. This will open up a file chooser. Select the desired melody file and click **open**.
 
