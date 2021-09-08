@@ -178,7 +178,12 @@ public final class StdAudio {
 		if (muted) {
 			return;
 		}
-		URL url = null;
+		//URL url = null;
+
+    AudioInputStream ais;
+    Clip clip;
+
+    /*
 		try {
 			File file = new File(filename);
 			if (file.canRead())
@@ -189,10 +194,25 @@ public final class StdAudio {
 		// URL url = StdAudio.class.getResource(filename);
 		if (url == null)
 			throw new RuntimeException("audio " + filename + " not found");
+    */
 
     // TODO: Replace this deprecation
+    /*
     AudioClip clip = Applet.newAudioClip(url);
 		clip.loop();
+    */
+    try
+        {
+            ais = AudioSystem.getAudioInputStream(new File(filename).getAbsoluteFile());
+
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+    catch (Exception e)
+        {
+            System.out.println("Error occured: " + e.getStackTrace());
+        }
 		notifyListeners(new AudioEvent(AudioEvent.Type.LOOP));
 	}
 
