@@ -189,7 +189,9 @@ public final class StdAudio {
 		// URL url = StdAudio.class.getResource(filename);
 		if (url == null)
 			throw new RuntimeException("audio " + filename + " not found");
-		AudioClip clip = Applet.newAudioClip(url);
+
+    // TODO: Replace this deprecation
+    AudioClip clip = Applet.newAudioClip(url);
 		clip.loop();
 		notifyListeners(new AudioEvent(AudioEvent.Type.LOOP));
 	}
