@@ -178,29 +178,10 @@ public final class StdAudio {
 		if (muted) {
 			return;
 		}
-		//URL url = null;
 
     AudioInputStream ais;
     Clip clip;
 
-    /*
-		try {
-			File file = new File(filename);
-			if (file.canRead())
-				url = file.toURI().toURL();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		// URL url = StdAudio.class.getResource(filename);
-		if (url == null)
-			throw new RuntimeException("audio " + filename + " not found");
-    */
-
-    // TODO: Replace this deprecation
-    /*
-    AudioClip clip = Applet.newAudioClip(url);
-		clip.loop();
-    */
     try
         {
             ais = AudioSystem.getAudioInputStream(new File(filename).getAbsoluteFile());
@@ -291,19 +272,23 @@ public final class StdAudio {
 	 */
 	public static void play(String filename) {
 		prePlay();
-		URL url = null;
-		try {
-			File file = new File(filename);
-			if (file.canRead())
-				url = file.toURI().toURL();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		// URL url = StdAudio.class.getResource(filename);
-		if (url == null)
-			throw new RuntimeException("audio " + filename + " not found");
-		AudioClip clip = Applet.newAudioClip(url);
-		clip.play();
+
+    Clip clip;
+    AudioInputStream ais;
+
+    try
+        {
+            ais = AudioSystem.getAudioInputStream(new File(filename).getAbsoluteFile());
+
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+            clip.loop(0);
+        }
+    catch (Exception e)
+        {
+            System.out.println("Error occured: " + e.getStackTrace());
+        }
+		notifyListeners(new AudioEvent(AudioEvent.Type.LOOP));
 	}
 
 	/**
