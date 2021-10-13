@@ -17,10 +17,10 @@ javac ./melody-cs1/src/*.java
 ## Run
 Run the program by running the following command:
 
-`
+```
 java ./melody-cs1/src/Main.java
 
-`
+```
 ## Usage
 A screenshot of the interface is provided in the image below.
 
