@@ -7,20 +7,18 @@ Through the interface, text files with melody information are able to be loaded 
 
 I found this program online at [Nifty Assignments](http://nifty.stanford.edu/2015/obourn-stepp-melody-maker/), which is a website that hosts university standard assignments from a number of universities around the world.
 
+The only file that I typed code in is the `Melody.java` file. The rest of the code was provided as part of the assignment.
+
 ## Compilation
 Compile the program using the following command
-
-`
+```
 javac ./melody-cs1/src/*.java
-`
-
+```
 ## Run
 Run the program by running the following command:
-
 `
 java ./melody-cs1/src/Main.java
 `
-
 ## Usage
 A screenshot of the interface is provided in the image below.
 
@@ -30,7 +28,7 @@ To load a file, click on the **Load** button. This will open up a file chooser. 
 
 The playback buttons are described below:
 
-**Load**: Load a text file containing the melody.
+**Load**: Load a text file containing the melody. Sample text files containing melodies can be found in the directory: `melody-cs1/src/sample-songs`.
 
 **Play**: Play the melody.
 
