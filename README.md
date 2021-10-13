@@ -5,6 +5,8 @@ This program is a Java implementation of a graphical music player.
 
 Through the interface, text files with melody information are able to be loaded to be played.
 
+I found this program online at [Nifty Assignments](http://nifty.stanford.edu/2015/obourn-stepp-melody-maker/), which is a website that hosts university standard assignments from a number of universities around the world.
+
 ## Compilation
 Compile the program using the following command
 
